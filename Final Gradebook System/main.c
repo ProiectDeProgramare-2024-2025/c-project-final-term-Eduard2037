@@ -16,7 +16,6 @@
 #define NAME_LEN 50
 #define FILENAME "gradebook.txt"
 
-// ANSI color codes for terminal
 #define COLOR_RESET   "\x1b[0m"
 #define COLOR_CLASS   "\x1b[1;34m"  // Bold Blue
 #define COLOR_STUDENT "\x1b[1;32m"  // Bold Green
@@ -45,7 +44,6 @@ typedef struct {
 Class classes[MAX_CLASSES];
 int classCount = 0;
 
-// Clear screen
 void clearScreen() {
     system(CLEAR);
 }
@@ -107,7 +105,6 @@ void readString(const char* prompt, char* buffer, int length) {
     }
 }
 
-// Read float with validation and range check 0-100 for grades
 float readGrade(const char* prompt) {
     char line[100];
     float grade;
@@ -218,7 +215,6 @@ void addGrade() {
     Student* student = &cls->students[si];
     int subjIndex = findSubjectIndex(student, subjectName);
     if (subjIndex != -1) {
-        // Subject exists - ask to modify instead
         printf(COLOR_ERROR "Subject %s already exists for student %s.\n" COLOR_RESET,
             subjectName, studentName);
         printf("Use 'Modify Grade' option to change the grade.\n");
@@ -283,7 +279,6 @@ void deleteGrade() {
         return;
     }
 
-    // Delete subject by shifting left
     for (int i = subjIndex; i < student->subjectCount - 1; i++) {
         student->subjects[i] = student->subjects[i+1];
     }
@@ -367,7 +362,6 @@ int main() {
     loadFromFile();
 
 #ifdef _WIN32
-    // Enable ANSI escape sequences on Windows 10+
     HANDLE hOut = GetStdHandle(STD_OUTPUT_HANDLE);
     if (hOut != INVALID_HANDLE_VALUE) {
         DWORD dwMode = 0;
